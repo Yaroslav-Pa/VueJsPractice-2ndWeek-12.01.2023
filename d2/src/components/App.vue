@@ -2,13 +2,13 @@
   <div>
     <input type="text" name="search" v-model="search" /><br />
     <table class="table table-dark">
-      <tr v-for="item in students" v-bind:key="item._id">
+      <tr v-for="(item,index) in students" v-bind:key="item._id">
         <td>{{ item.name }}</td>
         <td><input type="checkbox" v-model="item.isDonePr" /></td>
         <td>{{ item.group }}</td>
         <td><a href="#" @click="deleteStudent(item._id)">Видалити</a></td>
         <td>
-          <a href="#" @click="putToEdit(item._id)"
+          <a href="#" @click="putToEdit(index)"
             ><img
               src="https://img.icons8.com/material-outlined/24/null/pencil-tip.png"
           /></a>
@@ -69,23 +69,22 @@ export default {
           this.students.push(response.data);
         });
     },
-    putToEdit(Id) {
-      axios.get(`http://34.82.81.113:3000/students/${Id}`).then((response) => {
-        this.student = response.data;
-        this.editStudentId = Id;
-      });
+    putToEdit(index) {    
+        this.student = {...this.students[index]};
+        this.editStudentId = index;
     },
     editStudent() {
       axios
-        .put(`http://34.82.81.113:3000/students/${this.editStudentId}`, {
+        .put(`http://34.82.81.113:3000/students/${this.students[this.editStudentId]._id}`, {
           ...this.student,
         })
         .then((response) => {
-          for (let i = 0; i < this.students.length; i++) {
-            if (this.students[i]._id == this.editStudentId) {
-              this.students[i] = response.data;
-            }
-          }
+          // for (let i = 0; i < this.students.length; i++) {
+          //   if (this.students[i]._id == this.editStudentId) {
+          //     this.students[i] = response.data;
+          //   }
+          // }
+          this.students[this.editStudentId] = response.data;
         });
     },
   },
