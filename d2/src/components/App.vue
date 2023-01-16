@@ -2,7 +2,7 @@
   <div>
     <input type="text" name="search" v-model="search" /><br />
     <table class="table table-dark">
-      <tr v-for="(item,index) in students" v-bind:key="item._id">
+      <tr v-for="(item, index) in students" v-bind:key="item._id">
         <td>{{ item.name }}</td>
         <td><input type="checkbox" v-model="item.isDonePr" /></td>
         <td>{{ item.group }}</td>
@@ -27,9 +27,10 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import axios from "axios";
-
+</script>
+<script>
 export default {
   data() {
     return {
@@ -53,42 +54,47 @@ export default {
     //this.students = stud;
   },
   methods: {
-    deleteStudent(Id) {
-      axios
-        .delete(`http://34.82.81.113:3000/students/${Id}`)
-        .then((response) => {
-          this.students = this.students.filter((st) => st._id != Id);
-        });
-    },
-    addStudent() {
-      axios
-        .post("http://34.82.81.113:3000/students", {
-          ...this.student,
-        })
-        .then((response) => {
-          this.students.push(response.data);
-        });
-    },
-    putToEdit(index) {    
-        this.student = {...this.students[index]};
-        this.editStudentId = index;
-    },
-    editStudent() {
-      axios
-        .put(`http://34.82.81.113:3000/students/${this.students[this.editStudentId]._id}`, {
-          ...this.student,
-        })
-        .then((response) => {
-          // for (let i = 0; i < this.students.length; i++) {
-          //   if (this.students[i]._id == this.editStudentId) {
-          //     this.students[i] = response.data;
-          //   }
-          // }
-          this.students[this.editStudentId] = response.data;
-        });
-    },
+    // deleteStudent(Id) {
+    //   axios
+    //     .delete(`http://34.82.81.113:3000/students/${Id}`)
+    //     .then((response) => {
+    //       this.students = this.students.filter((st) => st._id != Id);
+    //     });
+    // },
+    // addStudent() {
+    //   axios
+    //     .post("http://34.82.81.113:3000/students", {
+    //       ...this.student,
+    //     })
+    //     .then((response) => {
+    //       this.students.push(response.data);
+    //     });
+    // },
+    // putToEdit(index) {
+    //   this.student = { ...this.students[index] };
+    //   this.editStudentId = index;
+    // },
+    // editStudent() {
+    //   axios
+    //     .put(
+    //       `http://34.82.81.113:3000/students/${
+    //         this.students[this.editStudentId]._id
+    //       }`,
+    //       {
+    //         ...this.student,
+    //       }
+    //     )
+    //     .then((response) => {
+    //       // for (let i = 0; i < this.students.length; i++) {
+    //       //   if (this.students[i]._id == this.editStudentId) {
+    //       //     this.students[i] = response.data;
+    //       //   }
+    //       // }
+    //       this.students[this.editStudentId] = response.data;
+    //     });
+    // },
   },
 };
-</script>
+</>
 
 <style scoped></style>
