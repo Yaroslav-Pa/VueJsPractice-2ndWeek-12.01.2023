@@ -1,12 +1,21 @@
 <template>
   <Modal :open="isOpen" @close="isOpen = !isOpen">
-    <img :src="student.photo" width="100" />
+    <img :src="student.photo" width="500" />
   </Modal>
-  <img :src="student.photo" width="100" />
-  <button :open="isOpen" @click="isOpen = !isOpen">Show Modal</button>
-  <br />
-  {{ student.name }}<br />
-  Завдання {{ isDonePrOfStudent }}
+  <div class="niceLetters">
+    <img
+      :open="isOpen"
+      @click="isOpen = !isOpen"
+      :src="student.photo"
+      width="200"
+    />
+    <br />
+    <!-- <button :open="isOpen" @click="isOpen = !isOpen">Show Modal</button> -->
+    <br />
+
+    <h2>{{ student.name }}</h2>
+    <h5>Завдання {{ isDonePrOfStudent }}</h5>
+  </div>
 </template>
 
 <script>
@@ -43,15 +52,10 @@ export default {
 </script>
 
 <style scoped>
-.activeDark {
-  top: 0;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-
+.niceLetters {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 </style>
