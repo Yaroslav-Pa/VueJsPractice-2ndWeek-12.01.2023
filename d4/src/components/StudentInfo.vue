@@ -1,6 +1,6 @@
 <template>
   <Modal :open="isOpen" @close="isOpen = !isOpen">
-    <img :src="student.photo" width="500" />
+    <img :src="student.photo" width="450" />
   </Modal>
   <div class="niceLetters">
     <img
@@ -22,6 +22,8 @@
 import axios from "axios";
 import Modal from "./Modal.vue";
 import { ref } from "vue";
+
+
 
 export default {
   components: { Modal },

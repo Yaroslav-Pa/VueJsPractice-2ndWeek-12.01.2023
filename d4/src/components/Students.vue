@@ -30,7 +30,8 @@
 </template>
 
 <script>
-import axios from "axios";
+const API_HOST = process.env.API_HOST;
+
 export default {
   data() {
     return {
@@ -47,7 +48,7 @@ export default {
     };
   },
   mounted: function () {
-    axios.get("http://34.82.81.113:3000/students").then((response) => {
+    this.axios.get(`${API_HOST}/students`).then((response) => {
       console.log(response.data);
       this.students = response.data;
     });
@@ -55,35 +56,31 @@ export default {
   },
   methods: {
     deleteStudent(Id) {
-      axios
-        .delete(`http://34.82.81.113:3000/students/${Id}`)
-        .then((response) => {
-          this.students = this.students.filter((st) => st._id != Id);
-        });
+      axios.delete(`${API_HOST}/students/${Id}`).then((response) => {
+        this.students = this.students.filter((st) => st._id != Id);
+      });
     },
     addStudent() {
-      axios
-        .post("http://34.82.81.113:3000/students", {
+      this.axios
+        .post(`${API_HOST}/students`, {
           ...this.student,
         })
         .then((response) => {
           this.students.push(response.data);
         });
+      (this.student.name = ""),
+        (this.student.zdav = false),
+        (this.student.group = "");
     },
     putToEdit(index) {
       this.student = { ...this.students[index] };
       this.editStudentId = index;
     },
     editStudent() {
-      axios
-        .put(
-          `http://34.82.81.113:3000/students/${
-            this.students[this.editStudentId]._id
-          }`,
-          {
-            ...this.student,
-          }
-        )
+      this.axios
+        .put(`${API_HOST}/students/${this.students[this.editStudentId]._id}`, {
+          ...this.student,
+        })
         .then((response) => {
           // for (let i = 0; i <script this.students.length; i++) {
           //   if (this.students[i]._id == this.editStudentId) {
@@ -91,6 +88,9 @@ export default {
           //   }
           // }
           this.students[this.editStudentId] = response.data;
+          (this.student.name = ""),
+            (this.student.zdav = false),
+            (this.student.group = "");
         });
     },
   },
