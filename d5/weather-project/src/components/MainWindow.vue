@@ -60,7 +60,7 @@ export default {
         this.chosenCitys.push(this.inputedCity);
         console.log(this.chosenCitys);
         localStorage.setItem("usersCitys", JSON.stringify(this.chosenCitys));
-        this.addCity = "";
+        this.inputedCity = "";
       } else {
         localStorage.clear();
         this.chosenCitys = [];
