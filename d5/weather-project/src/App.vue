@@ -13,7 +13,6 @@
 * {
   margin: 0px;
   padding: 0px;
-  color: white;
 }
 body {
   background-image: url("https://i.pinimg.com/originals/35/e8/0a/35e80af993051c2fba2fc4274138e17f.jpg");

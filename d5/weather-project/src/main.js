@@ -5,10 +5,11 @@ import VueAxios from "vue-axios";
 
 import App from "./App.vue";
 import MainWindow from "./components/MainWindow.vue";
+import CityWeather from "./components/CityWeather.vue";
 
 const routes = [
   { path: "/", component: MainWindow },
-  //{ path: "/student-info/:id", component: StudentInfo, props: true },
+  { path: "/city-weather/:Cityname", component: CityWeather, props: true },
 ];
 
 const router = createRouter({
