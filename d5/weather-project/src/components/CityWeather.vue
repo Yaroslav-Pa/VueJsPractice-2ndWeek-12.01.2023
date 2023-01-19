@@ -1,4 +1,7 @@
 <script>
+const VITE_API_HOST = import.meta.env.VITE_BACKEND_PORT;
+const VITE_API_ID = import.meta.env.VITE_MAP_KEY;
+
 export default {
   props: ["Cityname"],
   data() {
