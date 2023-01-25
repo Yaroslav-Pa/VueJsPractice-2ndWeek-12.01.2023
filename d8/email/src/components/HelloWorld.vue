@@ -1,26 +1,64 @@
 <template>
   <div class="container">
     <form>
-      <label class="black">Name</label>
-      <input type="text" v-model="nameIn" name="name" placeholder="Your Name" />
-      <label class="black">Email</label>
+      <label class="black">Full name of the employee</label>
+      <input
+        type="text"
+        v-model="employeeNameIn"
+        name="name"
+        placeholder="Full name"
+      />
+      <label class="black">Employee position</label>
+      <input
+        type="text"
+        v-model="posinionIn"
+        name="posinion"
+        placeholder="Position"
+      />
+      <label class="black">Employees place of work </label>
+      <input
+        type="text"
+        v-model="placeIn"
+        name="place"
+        placeholder="Place of work"
+      />
+      <label class="black">Description of the situation</label>
+      <textarea
+        name="message"
+        v-model="messageIn"
+        cols="30"
+        rows="5"
+        placeholder="Description"
+      >
+      </textarea>
+      <label class="black">Email to which it will be sent</label>
       <input
         type="email"
         v-model="emailIn"
         name="email"
         placeholder="Your Email"
       />
-      <label class="black">Message</label>
-      <textarea
-        name="message"
-        v-model="messageIn"
-        cols="30"
-        rows="5"
-        placeholder="Message"
-      >
-      </textarea>
-
-      <button v-on:click="sendMail">Надіслати</button>
+      <div class="black" :class="computedPadding">
+        <input type="checkbox" v-model="isAnonim" /> Send anonymously<br />
+      </div>
+      <div v-show="!isAnonim">
+        <label class="black">Yours full name</label>
+        <input
+          type="text"
+          v-model="yoursNameIn"
+          name="name"
+          placeholder="Full name"
+        />
+        <label class="black">Yours contact phone</label>
+        <input
+          type="text"
+          v-model="yoursPhoneIn"
+          name="phone"
+          placeholder="Phone"
+        />
+      </div>
+      <button type="button" v-on:click="sendMail">Надіслати</button>
+      <!-- <h1 class="black">{{ answerLog }}</h1> -->
     </form>
   </div>
 </template>
@@ -30,26 +68,53 @@ import emailjs from "emailjs-com";
 export default {
   data() {
     return {
-      nameIn: "Імя",
+      employeeNameIn: "ПІБ порушника",
+      placeIn: "інститут",
+      posinionIn: "вчитель",
+      messageIn: "Взяв гроші",
+
+      isAnonim: false,
+      yoursNameIn: "ПІБ заявника",
+      yoursPhoneIn: "380964522211",
+
       emailIn: "snekeis01@gmail.com",
-      messageIn: "ДОПОМОЖІІІІІІІІІІІІІІТЬ",
-      fromName: "анонім",
+      answerLog: "asdsdasd",
     };
   },
+  computed: {
+    computedPadding() {
+      return this.isAnonim ? "addPading" : "";
+    },
+  },
   methods: {
+    // cleanAll() {
+    //   (this.employeeNameIn = ""),
+    //     (this.placeIn = ""),
+    //     (this.posinionIn = ""),
+    //     (this.messageIn = ""),
+    //     (this.emailIn = ""),
+    //     (this.yoursNameIn = ""),
+    //     (this.yoursPhoneIn = "");
+    // },
     sendMail() {
-      //emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+      if (this.isAnonim) {
+        this.yoursNameIn = "анонімно";
+        this.yoursPhoneIn = "анонімно";
+      }
       console.log("Try!");
       emailjs
         .send(
           "service_fdg8guo",
           "template_via8a7e",
           {
-            to_name: this.nameIn,
-            to_email: this.emailIn,
+            employee_name: this.employeeNameIn,
+            employee_place: this.placeIn,
+            employee_posinion: this.posinionIn,
             message: this.messageIn,
+            to_email: this.emailIn,
 
-            from_name: this.fromName,
+            yours_name: this.yoursNameIn,
+            yours_phone: this.yoursPhoneIn,
           },
           "XbM5I-Rr-9oVbljDe"
         )
@@ -97,8 +162,12 @@ textarea {
   border-radius: 4px;
   box-sizing: border-box;
   margin-top: 6px;
-  margin-bottom: 16px;
+  margin-bottom: 6px;
   resize: vertical;
+}
+
+.addPading {
+  padding-bottom: 10px;
 }
 
 button {
